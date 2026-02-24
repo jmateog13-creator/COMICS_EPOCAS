@@ -33,16 +33,16 @@
                     <span id="timer-display">05:00</span>
                 </div>
             </header>
-            <main class="pdf-container">
-                <div class="pdf-controls">
-                    <button id="btn-prev-page" class="btn secondary pdf-nav-btn">◀ Anterior</button>
-                    <span class="pdf-page-info">Pàgina <span id="page-num"></span> de <span
-                            id="page-count"></span></span>
-                    <button id="btn-next-page" class="btn secondary pdf-nav-btn">Següent ▶</button>
+            <main class="pdf-container" style="position: relative;">
+                <!-- Capes invisibles per evitar que l'usuari pugui fer clic als controls natius del PDF (descarregar, etc.) -->
+                <div class="pdf-protect-top"
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 60px; z-index: 10; background: transparent;">
                 </div>
-                <div class="canvas-wrapper">
-                    <canvas id="pdf-render"></canvas>
+                <div class="pdf-protect-bottom"
+                    style="position: absolute; bottom: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent;">
                 </div>
+
+                <iframe id="pdf-frame" src="" frameborder="0"></iframe>
             </main>
             <footer class="reader-footer">
                 <button id="btn-back-menu" class="btn secondary">Tornar al Menú</button>
@@ -82,9 +82,6 @@
 
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <!-- PDF.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
     <script src="script.js"></script>
 </body>

@@ -253,53 +253,11 @@ body {
 .pdf-container {
     flex-grow: 1;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #111;
-    position: relative;
-    overflow: hidden;
 }
 
-.pdf-controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0.8rem;
+#pdf-frame {
     width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-}
-
-.pdf-page-info {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.pdf-nav-btn {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.canvas-wrapper {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    overflow: auto;
-    padding: 1rem;
-}
-
-#pdf-render {
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
-    border-radius: 4px;
+    height: 100%;
 }
 
 .reader-footer {

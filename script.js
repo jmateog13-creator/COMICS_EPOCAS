@@ -117,11 +117,6 @@ let timerInterval = null;
 let timeRemaining = 0;
 let userAnswers = [];
 
-let pdfDoc = null;
-let pageNum = 1;
-let pageIsRendering = false;
-let pageNumIsPending = null;
-
 // DOM Elements
 const views = {
     menu: document.getElementById('menu-view'),
@@ -132,19 +127,11 @@ const views = {
 
 const epochGrid = document.getElementById('epoch-grid');
 const readerTitle = document.getElementById('reader-title');
-const pdfCanvas = document.getElementById('pdf-render');
-const pdfCtx = pdfCanvas.getContext('2d');
-const btnPrevPage = document.getElementById('btn-prev-page');
-const btnNextPage = document.getElementById('btn-next-page');
-const pageNumDisplay = document.getElementById('page-num');
-const pageCountDisplay = document.getElementById('page-count');
+const pdfFrame = document.getElementById('pdf-frame');
 const timerDisplay = document.getElementById('timer-display');
 const btnToQuiz = document.getElementById('btn-to-quiz');
 const quizTooltip = document.getElementById('quiz-tooltip');
 const btnBackMenu = document.getElementById('btn-back-menu');
-
-// Configure PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 const quizTitle = document.getElementById('quiz-title');
 const questionsContainer = document.getElementById('questions-container');
@@ -191,16 +178,7 @@ function openReader(epoch) {
     currentEpoch = epoch;
     readerTitle.textContent = epoch.name;
 
-    // Load PDF
-    pdfjsLib.getDocument(epoch.pdf).promise.then(pdfDoc_ => {
-        pdfDoc = pdfDoc_;
-        pageCountDisplay.textContent = pdfDoc.numPages;
-        pageNum = 1;
-        renderPage(pageNum);
-    }).catch(err => {
-        console.error("Error loading PDF: ", err);
-        alert("⚠️ ERROR DE LECTURA (CORS): Has obert l'arxiu index.html fent doble clic (file://). Per raons de seguretat dels cercadors moderns, el lector de PDF avançat necessita que obris aquesta carpeta a través d'un servidor local (ex: Live Server a VSCode o python -m http.server).");
-    });
+    pdfFrame.src = epoch.pdf + "#toolbar=0&navpanes=0"; // Amagar eines si és possible
 
     // Reset timer and button
     btnToQuiz.disabled = true;
@@ -241,70 +219,16 @@ function startTimer() {
 
 btnBackMenu.addEventListener('click', () => {
     if (timerInterval) clearInterval(timerInterval);
-    pdfDoc = null;
-    pdfCtx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+    pdfFrame.src = "";
     showView('menu');
 });
 
 btnToQuiz.addEventListener('click', () => {
     if (!btnToQuiz.disabled) {
         if (timerInterval) clearInterval(timerInterval);
-        pdfDoc = null;
-        pdfCtx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+        pdfFrame.src = "";
         openQuiz();
     }
-});
-
-// -- PDF Rendering Logic --
-function renderPage(num) {
-    pageIsRendering = true;
-
-    pdfDoc.getPage(num).then(page => {
-        const container = document.querySelector('.canvas-wrapper');
-        const unscaledViewport = page.getViewport({ scale: 1 });
-        const scaleX = (container.clientWidth - 20) / unscaledViewport.width;
-        const scaleY = (container.clientHeight - 20) / unscaledViewport.height;
-        const scale = Math.min(scaleX, scaleY);
-
-        const viewport = page.getViewport({ scale });
-        pdfCanvas.height = viewport.height;
-        pdfCanvas.width = viewport.width;
-
-        const renderCtx = {
-            canvasContext: pdfCtx,
-            viewport: viewport
-        };
-
-        page.render(renderCtx).promise.then(() => {
-            pageIsRendering = false;
-            if (pageNumIsPending !== null) {
-                renderPage(pageNumIsPending);
-                pageNumIsPending = null;
-            }
-        });
-
-        pageNumDisplay.textContent = num;
-    });
-}
-
-function queueRenderPage(num) {
-    if (pageIsRendering) {
-        pageNumIsPending = num;
-    } else {
-        renderPage(num);
-    }
-}
-
-btnPrevPage.addEventListener('click', () => {
-    if (pageNum <= 1 || !pdfDoc) return;
-    pageNum--;
-    queueRenderPage(pageNum);
-});
-
-btnNextPage.addEventListener('click', () => {
-    if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-    pageNum++;
-    queueRenderPage(pageNum);
 });
 
 // Shuffle function per a bateries de preguntes
