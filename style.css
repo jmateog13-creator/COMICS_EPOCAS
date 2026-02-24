@@ -1,11 +1,13 @@
 :root {
     --bg-color: #1a1a24;
     --text-color: #ffffff;
-    --primary-color: #fca311; /* Gold/yellowish for highlighted actions */
+    --primary-color: #fca311;
+    /* Gold/yellowish for highlighted actions */
     --primary-hover: #e5930f;
     --secondary-color: #3f3f5a;
     --secondary-hover: #4f4f6a;
-    --success-color: #2ecc71; /* Green for completed epochs */
+    --success-color: #2ecc71;
+    /* Green for completed epochs */
     --success-hover: #27ae60;
     --danger-color: #e74c3c;
     --card-bg: #2a2a3c;
@@ -78,7 +80,8 @@ body {
     background-color: var(--secondary-hover);
 }
 
-.btn:disabled, .btn.disabled {
+.btn:disabled,
+.btn.disabled {
     cursor: not-allowed;
     opacity: 0.5;
     background-color: #555 !important;
@@ -103,13 +106,13 @@ body {
     padding: 8px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; 
+    bottom: 125%;
     left: 50%;
     margin-left: -100px;
     opacity: 0;
     transition: opacity 0.3s;
     font-size: 0.8rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .tooltip::after {
@@ -179,14 +182,17 @@ body {
 .epoch-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 5px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
     background-color: var(--primary-color);
     transition: all 0.3s ease;
 }
 
 .epoch-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     border-color: var(--primary-color);
 }
 
@@ -231,7 +237,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     padding: 0.5rem 1rem;
     border-radius: 8px;
     border: 1px solid var(--primary-color);
@@ -247,11 +253,53 @@ body {
 .pdf-container {
     flex-grow: 1;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #111;
+    position: relative;
+    overflow: hidden;
 }
 
-#pdf-frame {
+.pdf-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
     width: 100%;
-    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.pdf-page-info {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.pdf-nav-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.canvas-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: auto;
+    padding: 1rem;
+}
+
+#pdf-render {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
 }
 
 .reader-footer {
@@ -282,7 +330,7 @@ body {
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .question-text {
@@ -297,7 +345,8 @@ body {
     gap: 0.8rem;
 }
 
-.option-btn, .tf-btn {
+.option-btn,
+.tf-btn {
     background-color: var(--secondary-color);
     color: #fff;
     border: 2px solid transparent;
@@ -310,11 +359,13 @@ body {
     transition: all 0.2s ease;
 }
 
-.option-btn:hover, .tf-btn:hover {
+.option-btn:hover,
+.tf-btn:hover {
     background-color: var(--secondary-hover);
 }
 
-.option-btn.selected, .tf-btn.selected {
+.option-btn.selected,
+.tf-btn.selected {
     background-color: rgba(252, 163, 17, 0.2);
     border-color: var(--primary-color);
 }
@@ -337,7 +388,7 @@ body {
     padding: 3rem;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     max-width: 500px;
     width: 90%;
 }
