@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Còmics: Història de la Música</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body oncontextmenu="return false;">
+    <div id="app">
+        <!-- VISTA MENÚ -->
+        <div id="menu-view" class="view active">
+            <header class="hero">
+                <h1>Història de la Música en Còmics</h1>
+                <p>Selecciona una època per començar a llegir i posar a prova els teus coneixements.</p>
+            </header>
+            <main class="grid-container" id="epoch-grid">
+                <!-- Els botons es generaran dinàmicament aquí -->
+            </main>
+        </div>
+
+        <!-- VISTA LECTOR -->
+        <div id="reader-view" class="view">
+            <header class="reader-header">
+                <h2 id="reader-title">Títol de l'Època</h2>
+                <div class="timer-container">
+                    <span class="timer-label">Temps de lectura mínim:</span>
+                    <span id="timer-display">05:00</span>
+                </div>
+            </header>
+            <main class="pdf-container" style="position: relative;">
+                <!-- Capes invisibles per evitar que l'usuari pugui fer clic als controls natius del PDF (descarregar, etc.) -->
+                <div class="pdf-protect-top"
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 60px; z-index: 10; background: transparent;">
+                </div>
+                <div class="pdf-protect-bottom"
+                    style="position: absolute; bottom: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent;">
+                </div>
+
+                <iframe id="pdf-frame" src="" frameborder="0"></iframe>
+            </main>
+            <footer class="reader-footer">
+                <button id="btn-back-menu" class="btn secondary">Tornar al Menú</button>
+                <div class="tooltip-container">
+                    <button id="btn-to-quiz" class="btn primary disabled" disabled>Anar a les preguntes</button>
+                    <span id="quiz-tooltip" class="tooltip">Has d'esperar que el temps arribi a zero.</span>
+                </div>
+            </footer>
+        </div>
+
+        <!-- VISTA QÜESTIONARI -->
+        <div id="quiz-view" class="view">
+            <header class="quiz-header">
+                <h2 id="quiz-title">Preguntes: Títol</h2>
+            </header>
+            <main class="quiz-container">
+                <div id="questions-container">
+                    <!-- Les preguntes es generaran dinàmicament aquí -->
+                </div>
+                <button id="btn-submit-quiz" class="btn primary">Enviar Respostes</button>
+                <p id="quiz-error" class="hidden error-msg">Si us plau, respon a totes les preguntes.</p>
+            </main>
+        </div>
+
+        <!-- VISTA RESULTATS -->
+        <div id="results-view" class="view">
+            <div class="results-card">
+                <h2>Resultats</h2>
+                <div class="score-circle">
+                    <span id="score-display">0</span>/5
+                </div>
+                <p id="feedback-msg">Molt bé!</p>
+                <button id="btn-return-menu" class="btn primary mt-4">Tornar al Menú Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
